@@ -70,7 +70,7 @@ jobs:
         with:
           host: ${{ vars.PROD_SERVER_HOST }}
           username: ${{ vars.PROD_SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          key: ${{ secrets.PROD_SERVER_SSH_KEY }}
           envs: DEPLOY_DIR
           script_stop: true
           script: |
