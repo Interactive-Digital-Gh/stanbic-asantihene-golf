@@ -22,13 +22,13 @@ const Edition = () => {
                 className="max-w-5xl text-center text-white"
             >
                 <h1 className="text-[20px] md:text-[40px] md:font-extrabold font-bold mb-6 leading-tight md:text-center text-left">
-                    WELCOME TO THE 7TH<br className="md:hidden block" /> EDITION<br className="hidden md:block" />
+                    WELCOME TO THE 8TH<br className="md:hidden block" /> EDITION<br className="hidden md:block" />
                     OF THE OTUMFUO GOLF TOURNAMENT
                 </h1>
 
                 <p className="text-[16px] font-libre md:text-base leading-relaxed mb-8 md:text-center text-left">
-                    Stanbic Bank is the title sponsor of the 7th Otumfuo Invitational Golf Tournament Championship 2025,
-                    celebrating the 26th anniversary of the Asantehene and the bank. The event aims to connect with
+                    Stanbic Bank is the title sponsor of the 8th Otumfuo Invitational Golf Tournament Championship 2026,
+                    celebrating the 27th anniversary of the Asantehene and the bank. The event aims to connect with
                     clients, and the golfing community, and foster growth opportunities. It also includes side activities
                     for non-players and families, promoting community bonding and the sport of golf.
                     <br /><br />
