@@ -56,7 +56,7 @@ const Hero = () => {
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 1, delay: 1, ease: 'easeOut' }}
                 >
-                    <b>December 12th–14th</b>, 2025 <br />
+                    <b>November 7th–9th</b>, 2026 <br />
                     <span className="font-normal"><b>Royal Golf Club</b>, Kumasi</span>
                 </motion.p>
             </motion.div>

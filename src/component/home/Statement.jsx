@@ -52,9 +52,9 @@ const Statement = () => {
                     {/* LEFT - TEXT */}
                     <div className="p-6 w-full md:w-1/2">
                         <p className="text-sm uppercase font-semibold text-[#0637A2]">
-                            Friday December
+                            Saturday December
                         </p>
-                        <h3 className="text-[48px] font-bold text-[#003087]">12TH</h3>
+                        <h3 className="text-[48px] font-bold text-[#003087]">7TH</h3>
 
                         <p className="font-semibold text-[24px] leading-[40px] text-[#003087] mt-2">
                             Event Day 1 – The Friday Night
@@ -89,9 +89,9 @@ const Statement = () => {
                     {/* LEFT - TEXT */}
                     <div className="p-6 w-full md:w-1/2">
                         <p className="text-sm uppercase font-semibold text-[#0637A2]">
-                            Saturday December
+                            Sunday December
                         </p>
-                        <h3 className="text-[48px] font-bold text-[#003087]">13TH</h3>
+                        <h3 className="text-[48px] font-bold text-[#003087]">8TH</h3>
 
                         <p className="font-semibold text-[24px] leading-[40px] text-[#003087] mt-2">
                             Event Day 2 – Ceremonial Tee & Game Day
@@ -128,9 +128,9 @@ const Statement = () => {
                     {/* LEFT - TEXT */}
                     <div className="p-6 w-full md:w-1/2">
                         <p className="text-sm uppercase font-semibold text-[#0637A2]">
-                            Sunday December
+                            Monday December
                         </p>
-                        <h3 className="text-[48px] font-bold text-[#003087]">14TH</h3>
+                        <h3 className="text-[48px] font-bold text-[#003087]">9TH</h3>
 
                         <p className="font-semibold text-[24px] leading-[40px] text-[#003087] mt-2">
                             Day 3 – Departures
