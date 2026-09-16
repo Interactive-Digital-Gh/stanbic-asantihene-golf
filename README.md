@@ -1,8 +1,27 @@
-# React + Vite
+# Asantehene Golf Tournament
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing and tournament site for the Stanbic Asantehene Golf Tournament: registration form, live leaderboard, gallery and Kumasi weather.
 
-Currently, two official plugins are available:
+Built with React 18, Vite 5, Tailwind CSS 3 and React Router. Registrations and leaderboard data come from the CMS at `https://asantehenegolf-cms.interactivedigital.com.gh`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Local development
+
+```bash
+nvm use            # Node 22 (see .nvmrc)
+npm ci
+npm run dev        # http://localhost:5173
+```
+
+Other scripts:
+
+```bash
+npm run lint       # ESLint
+npm run build      # production build into dist/
+npm run preview    # serve dist/ locally
+```
+
+## Deployment
+
+Pushing to `main` runs `.github/workflows/deploy.yml`: it lints and builds on the GitHub runner, then SSHes to the ID server, pulls `main` into `/var/www/production/stanbic-asantihene-golf`, runs `npm ci && npm run build`, and reloads nginx. Pull requests and other branches run `.github/workflows/ci.yml` (lint + build only).
+
+Required GitHub Actions settings are listed at the top of `deploy.yml`. The nginx server block must point at `dist/` and include `try_files $uri $uri/ /index.html;` so React Router routes (`/gallery`, `/table`) work on refresh.

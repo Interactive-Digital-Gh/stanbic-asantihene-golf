@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Cloud, CloudRain, Sun, RefreshCw } from "lucide-react";
 import SunIllustration from "./SunIllustration";
@@ -18,12 +18,20 @@ function getWeatherType(main) {
     return "cloud";
 }
 
+function formatHour(timestamp) {
+    const date = new Date(timestamp * 1000);
+    let hours = date.getHours();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12;
+    return `${hours} ${ampm}`;
+}
+
 export default function WeatherApp() {
     const [weather, setWeather] = useState(null);
     const [hourly, setHourly] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    const fetchWeather = async () => {
+    const fetchWeather = useCallback(async () => {
         setLoading(true);
         try {
             const res = await fetch(`${api.baseUrl}weather?q=Kumasi&units=metric&appid=${api.key}`);
@@ -46,19 +54,11 @@ export default function WeatherApp() {
             console.error("API error:", err);
         }
         setLoading(false);
-    };
-
-    const formatHour = (timestamp) => {
-        const date = new Date(timestamp * 1000);
-        let hours = date.getHours();
-        const ampm = hours >= 12 ? "PM" : "AM";
-        hours = hours % 12 || 12;
-        return `${hours} ${ampm}`;
-    };
+    }, []);
 
     useEffect(() => {
         fetchWeather();
-    }, []);
+    }, [fetchWeather]);
 
     if (loading || !weather)
         return <p className="text-center text-gray-500">Loading weather...</p>;

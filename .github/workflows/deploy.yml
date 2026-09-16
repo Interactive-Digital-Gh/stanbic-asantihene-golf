@@ -1,0 +1,113 @@
+name: Deploy
+
+# Deploys the Asantehene Golf Tournament site to the ID server on every push
+# to main, or manually from the Actions tab.
+#
+# Flow: build once on the GitHub runner as a gate (a broken build never touches
+# the server), then SSH in, pull main, install, build, and reload nginx - the
+# same pattern as the other Interactive Digital frontends.
+#
+# Required repository settings (Settings -> Secrets and variables -> Actions):
+#   Variables
+#     PROD_SERVER_HOST  server address, e.g. 207.154.235.164
+#     PROD_SERVER_USER  SSH user that owns the app dir and may reload nginx
+#     SITE_URL          public URL, e.g. https://asantehenegolf.interactivedigital.com.gh
+#                       (optional - only used for the post-deploy health check)
+#   Secrets
+#     SERVER_SSH_KEY    private SSH key whose public half is in the server
+#                       user's ~/.ssh/authorized_keys
+#
+# One-time server setup (before the first run):
+#   git clone git@github.com:Interactive-Digital-Gh/stanbic-asantihene-golf.git \
+#       /var/www/production/stanbic-asantihene-golf
+#   and an nginx server block whose root is .../stanbic-asantihene-golf/dist
+#   with `try_files $uri $uri/ /index.html;` (React Router needs the fallback).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Never run two deploys at once; a new push waits for the previous one.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+env:
+  DEPLOY_DIR: /var/www/production/stanbic-asantihene-golf
+
+jobs:
+  build:
+    name: Build check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+  deploy:
+    name: Deploy to ID server
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ vars.SITE_URL }}
+    steps:
+      - name: Pull, build and publish on server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.PROD_SERVER_HOST }}
+          username: ${{ vars.PROD_SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          envs: DEPLOY_DIR
+          script_stop: true
+          script: |
+            set -euo pipefail
+
+            # Use the nvm-managed Node (the system node on the box is older).
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+            nvm use 22
+            node -v
+
+            cd "$DEPLOY_DIR"
+
+            OLD=$(git rev-parse --short HEAD)
+            git fetch origin main
+            git reset --hard origin/main
+            git clean -fd -e node_modules -e dist
+            NEW=$(git rev-parse --short HEAD)
+
+            npm ci --no-audit --no-fund
+            npm run build
+            test -f dist/index.html
+
+            sudo systemctl reload nginx
+            echo "Deployed $OLD -> $NEW"
+
+      - name: Health check
+        if: vars.SITE_URL != ''
+        run: |
+          for i in 1 2 3 4 5; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "${{ vars.SITE_URL }}/")
+            if [ "$code" = "200" ]; then
+              echo "Site is up (HTTP $code)"
+              exit 0
+            fi
+            echo "Attempt $i: HTTP $code, retrying..."
+            sleep 5
+          done
+          echo "Health check failed" >&2
+          exit 1
