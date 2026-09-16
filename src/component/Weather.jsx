@@ -65,7 +65,7 @@ export default function WeatherApp() {
 
     return (
         <div id="weather-section">
-            <div className={`md:max-w-5xl my-10 md:mx-auto mx-8 px-2 py-6 rounded-lg md:shadow-lg 
+            <div className={`md:max-w-5xl my-10 mx-8 lg:mx-auto px-2 py-6 rounded-lg md:shadow-lg 
         ${weather.temp >= 27 ? "bg-gradient-to-r from-yellow-50 via-yellow-100 to-yellow-400/30" : "bg-gradient-to-r from-gray-50 via-gray-100 to-gray-300"}`}>
                 <div className="flex flex-col md:flex-row items-start lg:items-center justify-between gap-10">
 

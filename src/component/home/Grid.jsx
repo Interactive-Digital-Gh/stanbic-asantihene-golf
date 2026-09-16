@@ -25,7 +25,7 @@ export default function Grid() {
     return (
         <section className="w-full py-14 px-8 md:px-12 lg:px-[151px] h-auto lg:h-[756px]">
             <div
-                className="grid grid-cols-1 lg:grid-cols-4 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
 
             >
                 {/* LEFT SIDE */}
@@ -36,18 +36,18 @@ export default function Grid() {
                             index={i}
                             title={item.title}
                             img={item.img}
-                            height="333px"
+                            heightClass="h-[333px]"
                         />
                     ))}
                 </div>
 
                 {/* CENTER TALL CARD */}
-                <div className="md:col-span-2">
+                <div className="md:col-span-2 md:order-last lg:order-none">
                     <Card
                         index={2}
                         title={middle.title}
                         img={middle.img}
-                        height="686px"
+                        heightClass="h-[686px] md:h-[420px] lg:h-[686px]"
                     />
                 </div>
 
@@ -59,7 +59,7 @@ export default function Grid() {
                             index={i + 3}
                             title={item.title}
                             img={item.img}
-                            height="333px"
+                            heightClass="h-[333px]"
                         />
                     ))}
                 </div>
@@ -71,7 +71,7 @@ export default function Grid() {
 /* ------------------------------
    Reusable Card Component
 ------------------------------ */
-function Card({ img, title, index, height }) {
+function Card({ img, title, index, heightClass }) {
     const fadeUp = {
         hidden: { opacity: 0, y: 30 },
         show: (i) => ({
@@ -90,8 +90,7 @@ function Card({ img, title, index, height }) {
             viewport={{ once: true, amount: 0.2 }}
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="rounded-xl overflow-hidden shadow-lg relative group cursor-pointer w-full flex justify-center items-center"
-            style={{ height }}
+            className={`rounded-xl overflow-hidden shadow-lg relative group cursor-pointer w-full flex justify-center items-center ${heightClass}`}
         >
             {/* Image */}
             <img
@@ -118,5 +117,5 @@ Card.propTypes = {
     img: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
-    height: PropTypes.string.isRequired,
+    heightClass: PropTypes.string.isRequired,
 };

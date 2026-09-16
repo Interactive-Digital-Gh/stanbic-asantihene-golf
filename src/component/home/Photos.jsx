@@ -36,7 +36,7 @@ const Photos = () => {
                         whileHover={{ scale: 0.9 }}
                         src={img1}
                         alt="image1"
-                        className="object-cover w-full h-[200px] lg:h-full"
+                        className="object-cover w-full h-[200px] md:h-[260px] lg:h-full"
                         loading="lazy"
                     />
                 </motion.div>
@@ -54,7 +54,7 @@ const Photos = () => {
                         whileHover={{ scale: 0.9 }}
                         src={img2}
                         alt="image2"
-                        className="object-cover w-1/2 lg:w-full h-[200px] lg:h-1/2 cursor-pointer"
+                        className="object-cover w-1/2 lg:w-full h-[200px] md:h-[260px] lg:h-1/2 cursor-pointer"
                         loading="lazy"
                         onClick={() => setSelectedImage(img2)}
                     />
@@ -63,7 +63,7 @@ const Photos = () => {
                         whileHover={{ scale: 0.9 }}
                         src={img3}
                         alt="image3"
-                        className="object-cover w-1/2 lg:w-full h-[200px] lg:h-1/2 cursor-pointer"
+                        className="object-cover w-1/2 lg:w-full h-[200px] md:h-[260px] lg:h-1/2 cursor-pointer"
                         loading="lazy"
                         onClick={() => setSelectedImage(img3)}
                     />
@@ -83,7 +83,7 @@ const Photos = () => {
                         whileHover={{ scale: 0.9 }}
                         src={img4}
                         alt="image4"
-                        className="object-cover w-full h-[200px] lg:h-full"
+                        className="object-cover w-full h-[200px] md:h-[260px] lg:h-full"
                         loading="lazy"
                     />
                 </motion.div>

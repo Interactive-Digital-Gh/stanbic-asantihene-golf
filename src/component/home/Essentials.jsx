@@ -39,14 +39,14 @@ export default function Essentials() {
                 <motion.img
                     src={ess}
                     alt="Sunglasses on wood"
-                    className="lg:w-[255px] w-[130px] lg:h-[395px] h-[230px] object-cover shadow-md rounded-xl"
+                    className="lg:w-[255px] md:w-[220px] w-[130px] lg:h-[395px] md:h-[340px] h-[230px] object-cover shadow-md rounded-xl"
                     variants={fadeUp}
                     whileHover={{ scale: 1.03 }}
                 />
                 <motion.img
                     src={ess1}
                     alt="Golf bag outdoors"
-                    className="lg:w-[255px] w-[130px]  lg:h-[395px] h-[230px] object-cover shadow-md mt-20 lg:mt-[70px] rounded-xl"
+                    className="lg:w-[255px] md:w-[220px] w-[130px]  lg:h-[395px] md:h-[340px] h-[230px] object-cover shadow-md mt-20 lg:mt-[70px] rounded-xl"
                     variants={fadeUp}
                     whileHover={{ scale: 1.03 }}
                 />

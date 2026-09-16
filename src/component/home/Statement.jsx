@@ -70,11 +70,13 @@ const Statement = () => {
                     </div>
 
                     {/* RIGHT - IMAGE */}
-                    <img
-                        src={img1}
-                        alt="event"
-                        className="w-full md:w-1/2 h-full object-cover rounded-[10px]"
-                    />
+                    <div className="w-full md:w-1/2 relative md:min-h-[260px]">
+                        <img
+                            src={img1}
+                            alt="event"
+                            className="w-full h-full md:absolute md:inset-0 object-cover rounded-[10px]"
+                        />
+                    </div>
                 </motion.div>
 
                 {/* ===================== EVENT BLOCK 2 ===================== */}
@@ -109,11 +111,13 @@ const Statement = () => {
                     </div>
 
                     {/* RIGHT - IMAGE */}
-                    <img
-                        src={img2}
-                        alt="event"
-                        className="w-full md:w-1/2 h-full object-cover rounded-[10px]"
-                    />
+                    <div className="w-full md:w-1/2 relative md:min-h-[260px]">
+                        <img
+                            src={img2}
+                            alt="event"
+                            className="w-full h-full md:absolute md:inset-0 object-cover rounded-[10px]"
+                        />
+                    </div>
                 </motion.div>
 
                 {/* ===================== EVENT BLOCK 3 ===================== */}
@@ -144,11 +148,13 @@ const Statement = () => {
                     </div>
 
                     {/* RIGHT - IMAGE */}
-                    <img
-                        src={img3}
-                        alt="event"
-                        className="w-full md:w-1/2 h-full object-cover rounded-[10px]"
-                    />
+                    <div className="w-full md:w-1/2 relative md:min-h-[260px]">
+                        <img
+                            src={img3}
+                            alt="event"
+                            className="w-full h-full md:absolute md:inset-0 object-cover rounded-[10px]"
+                        />
+                    </div>
                 </motion.div>
             </div>
         </section>

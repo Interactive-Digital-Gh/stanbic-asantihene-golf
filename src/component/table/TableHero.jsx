@@ -42,7 +42,7 @@ const TableHero = () => {
             <img
                 src={tablebg}
                 alt="Desktop Background"
-                className="hidden md:block w-full h-full object-cover"
+                className="hidden md:block w-full h-full object-cover md:object-left xl:object-center"
             />
             <img
                 src={tablemobile}
@@ -51,7 +51,7 @@ const TableHero = () => {
             />
 
             {/* Positioned weather container */}
-            <div className="absolute md:top-[30%] top-[50%] lg:right-[220px] right-[13%] 4xl:right-[320px] w-[300px] lg:h-[300px] 4xl:h-[400px] flex items-center justify-center">
+            <div className="absolute md:top-[30%] top-[50%] md:right-4 lg:right-[220px] right-[13%] 4xl:right-[320px] w-[300px] lg:h-[300px] 4xl:h-[400px] flex items-center justify-center">
                 {loading || !weather ? (
                     <p className="text-white">Loading...</p>
                 ) : (

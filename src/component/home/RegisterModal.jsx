@@ -92,7 +92,7 @@ const RegisterModal = ({ open, onClose }) => {
 
                 <div className="flex flex-col md:flex-row gap-6 md:gap-10">
 
-                    <div className="hidden md:flex justify-center items-center flex-1">
+                    <div className="hidden lg:flex justify-center items-center flex-1">
                         <img src={formshield} alt="Golf players" className="h-[350px] object-contain" />
                     </div>
 

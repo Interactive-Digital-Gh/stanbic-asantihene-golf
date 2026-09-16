@@ -10,14 +10,14 @@ const GalleryHero = () => {
             <img
                 src={gallerymobile}
                 alt="Gallery Background Mobile"
-                className="w-full h-full object-cover lg:hidden"
+                className="w-full h-full object-cover md:hidden"
             />
 
             {/* Desktop Image */}
             <img
                 src={gallerybg}
                 alt="Gallery Background Desktop"
-                className="hidden lg:block w-full h-full object-cover"
+                className="hidden md:block w-full h-full object-cover md:object-left xl:object-center"
             />
         </section>
     );

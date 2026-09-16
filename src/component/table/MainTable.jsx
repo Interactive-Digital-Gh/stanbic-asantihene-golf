@@ -54,7 +54,7 @@ const MainTable = () => {
                 className="relative w-full h-[964px] bg-cover bg-center flex items-center justify-center"
                 style={{ backgroundImage: `url(${golfcourse})` }}
             >
-                <div className="absolute w-full max-w-[1056px] bg-white rounded-lg shadow-md">
+                <div className="absolute w-full md:w-[calc(100%-4rem)] lg:w-full max-w-[1056px] bg-white rounded-lg shadow-md">
                     <div className="p-4 md:p-8">
 
                         {/* Header */}

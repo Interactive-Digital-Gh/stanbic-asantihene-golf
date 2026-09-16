@@ -20,7 +20,7 @@ export default function Slider() {
     // Detect screen width on load and resize
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth <= 768);
+            setIsMobile(window.innerWidth < 768);
         };
         handleResize(); // Check on mount
         window.addEventListener("resize", handleResize);
@@ -76,7 +76,7 @@ export default function Slider() {
                         <img
                             src={img}
                             alt={`slide-${index}`}
-                            className={`w-full h-full ${isMobile ? "object-contain" : "object-cover"}`}
+                            className={`w-full h-full ${isMobile ? "object-contain" : "object-cover md:object-left xl:object-center"}`}
                             loading="lazy"
                         />
                     </motion.div>

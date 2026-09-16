@@ -62,7 +62,7 @@ const PhotoGrid = () => {
                 <FaTimes onClick={() => setModal(false)} />
             </div>
 
-            <div className="md:px-[170px] px-4 flex flex-col items-center mb-8">
+            <div className="lg:px-[170px] md:px-12 px-4 flex flex-col items-center mb-8">
                 {/* GALLERY GRID */}
                 <div className="gallery">
                     {currentImages.map((item, index) => (
