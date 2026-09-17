@@ -54,7 +54,7 @@ const Statement = () => {
                         <p className="text-sm uppercase font-semibold text-[#0637A2]">
                             Saturday December
                         </p>
-                        <h3 className="text-[48px] font-bold text-[#003087]">7TH</h3>
+                        <h3 className="text-[48px] font-bold text-[#003087]">6TH</h3>
 
                         <p className="font-semibold text-[24px] leading-[40px] text-[#003087] mt-2">
                             Event Day 1 – The Friday Night
@@ -91,7 +91,7 @@ const Statement = () => {
                         <p className="text-sm uppercase font-semibold text-[#0637A2]">
                             Sunday December
                         </p>
-                        <h3 className="text-[48px] font-bold text-[#003087]">8TH</h3>
+                        <h3 className="text-[48px] font-bold text-[#003087]">7TH</h3>
 
                         <p className="font-semibold text-[24px] leading-[40px] text-[#003087] mt-2">
                             Event Day 2 – Ceremonial Tee & Game Day
@@ -130,7 +130,7 @@ const Statement = () => {
                         <p className="text-sm uppercase font-semibold text-[#0637A2]">
                             Monday December
                         </p>
-                        <h3 className="text-[48px] font-bold text-[#003087]">9TH</h3>
+                        <h3 className="text-[48px] font-bold text-[#003087]">8TH</h3>
 
                         <p className="font-semibold text-[24px] leading-[40px] text-[#003087] mt-2">
                             Day 3 – Departures
