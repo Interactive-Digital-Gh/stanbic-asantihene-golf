@@ -2,7 +2,7 @@
 
 Marketing and tournament site for the Stanbic Asantehene Golf Tournament: registration form, live leaderboard, gallery and Kumasi weather.
 
-Built with React 18, Vite 5, Tailwind CSS 3 and React Router. Registrations and leaderboard data come from the CMS at `https://asantehenegolf-cms.interactivedigital.com.gh`.
+Built with React 18, Vite 5, Tailwind CSS 3 and React Router. Registrations and leaderboard data come from the CMS, served at `https://asantehenegolf.com/cms` (override with `VITE_CMS_URL` in a `.env.local` for local development).
 
 ## Local development
 

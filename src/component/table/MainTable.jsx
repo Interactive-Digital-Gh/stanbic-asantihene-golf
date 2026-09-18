@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import golfcourse from "../../assets/table/golfcourse.png"
 import { GiGolfFlag } from "react-icons/gi";
+import { CMS_URL } from "../../lib/cms";
 
 const MainTable = () => {
 
@@ -29,7 +30,7 @@ const MainTable = () => {
         const fetchPlayers = async () => {
             try {
                 const response = await fetch(
-                    "https://asantehenegolf-cms.interactivedigital.com.gh/api/players-data"
+                    `${CMS_URL}/api/players-data`
                 );
 
                 if (!response.ok) {

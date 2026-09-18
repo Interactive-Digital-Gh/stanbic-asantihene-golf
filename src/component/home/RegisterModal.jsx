@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import formshield from '../../assets/hero/formshield.png'
 import SuccessModal from "./SuccessModal";
+import { CMS_URL } from "../../lib/cms";
 
 const RegisterModal = ({ open, onClose }) => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -36,7 +37,7 @@ const RegisterModal = ({ open, onClose }) => {
     const handleFinalSubmit = async () => {
         try {
             const response = await fetch(
-                "https://asantehenegolf-cms.interactivedigital.com.gh/api/tournament-registrations",
+                `${CMS_URL}/api/tournament-registrations`,
                 {
                     method: "POST",
                     headers: {
