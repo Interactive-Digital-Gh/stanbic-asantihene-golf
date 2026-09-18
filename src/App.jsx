@@ -5,6 +5,7 @@ import Navbar from './component/Navbar'
 import Gallery from './pages/Gallery'
 import Home from './pages/Home'
 import Table from './pages/Table'
+import NotFound from './pages/NotFound'
 
 
 
@@ -17,6 +18,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/gallery' element={<Gallery />} />
           <Route path='/table' element={<Table />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </div>
