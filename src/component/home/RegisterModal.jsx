@@ -5,76 +5,98 @@ import formshield from '../../assets/hero/formshield.png'
 import SuccessModal from "./SuccessModal";
 import { CMS_URL } from "../../lib/cms";
 
+const EMPTY_FORM = {
+    full_name: "",
+    phone_number: "",
+    email: "",
+    tshirt_size: "",
+    dietary_needs: "",
+    handicap_id: "",
+    handdicap_index: "",
+    golf_club: "",
+    emergency_contact_name: "",
+    emergency_contact_phone: "",
+};
+
 const RegisterModal = ({ open, onClose }) => {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const [formData, setFormData] = useState({
-        full_name: "",
-        phone_number: "",
-        email: "",
-        tshirt_size: "",
-        dietary_needs: "",
-        handicap_id: "",
-        handdicap_index: "",
-        golf_club: "",
-        emergency_contact_name: "",
-        emergency_contact_phone: "",
-    });
+    const [formData, setFormData] = useState(EMPTY_FORM);
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState("");
+    const [fieldErrors, setFieldErrors] = useState({});
 
     if (!open) return null;
 
     const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        if (fieldErrors[name]) {
+            setFieldErrors((prev) => {
+                const next = { ...prev };
+                delete next[name];
+                return next;
+            });
+        }
     };
 
-    const handleSubmit = (e) => {
+    // Send the registration to the CMS first; the "thank you" screen is only
+    // shown once the CMS has confirmed it stored the record.
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setShowSuccessModal(true);
-    };
+        if (submitting) return;
 
-    const handleFinalSubmit = async () => {
+        setSubmitting(true);
+        setError("");
+        setFieldErrors({});
+
         try {
-            const response = await fetch(
-                `${CMS_URL}/api/tournament-registrations`,
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                }
-            );
+            const response = await fetch(`${CMS_URL}/api/tournament-registrations`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
 
-            if (!response.ok) {
-                console.log(await response.text());
-                alert("Something went wrong. Please try again.");
+            if (response.status === 422) {
+                const body = await response.json().catch(() => ({}));
+                setFieldErrors(body.errors || {});
+                setError("Please check the highlighted fields and try again.");
                 return;
             }
 
-            // ✅ RESET FORM AFTER SUCCESSFUL SUBMISSION
-            setFormData({
-                full_name: "",
-                phone_number: "",
-                email: "",
-                tshirt_size: "",
-                dietary_needs: "",
-                handicap_id: "",
-                handdicap_index: "",
-                golf_club: "",
-                emergency_contact_name: "",
-                emergency_contact_phone: "",
-            });
+            if (response.status === 429) {
+                setError("Too many attempts. Please wait a minute and try again.");
+                return;
+            }
 
-            setShowSuccessModal(false);
-            onClose();
+            if (!response.ok) {
+                console.error("Registration failed:", response.status, await response.text());
+                setError("Something went wrong on our side. Please try again in a moment.");
+                return;
+            }
 
-        } catch (error) {
-            console.error("API Error:", error);
-            alert("Network error—Try again later.");
+            setShowSuccessModal(true);
+        } catch (err) {
+            console.error("Registration network error:", err);
+            setError("We could not reach the server. Please check your connection and try again.");
+        } finally {
+            setSubmitting(false);
         }
     };
+
+    const handleDone = () => {
+        setShowSuccessModal(false);
+        setFormData(EMPTY_FORM);
+        setError("");
+        setFieldErrors({});
+        onClose();
+    };
+
+    const fieldError = (name) => fieldErrors[name]?.[0];
+    const inputClass = (name) =>
+        `border rounded-lg px-4 py-3 text-sm text-black ${fieldError(name) ? "border-red-500" : "border-gray-300"}`;
 
     return (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 md:p-0">
@@ -101,6 +123,15 @@ const RegisterModal = ({ open, onClose }) => {
                         onSubmit={handleSubmit}
                         className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 flex-1 text-[#2A2A2A]"
                     >
+                        {error && (
+                            <div
+                                role="alert"
+                                className="col-span-1 md:col-span-2 bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm"
+                            >
+                                {error}
+                            </div>
+                        )}
+
                         {/* Full Name */}
                         <div className="flex flex-col">
                             <label className="text-sm font-medium mb-2 text-custom-blue">Full Name (As shown on your ID)</label>
@@ -111,8 +142,9 @@ const RegisterModal = ({ open, onClose }) => {
                                 onChange={handleChange}
                                 placeholder="e.g. John Doe"
                                 required
-                                className="border border-gray-300 rounded-lg px-4 py-3 text-sm text-black"
+                                className={inputClass("full_name")}
                             />
+                            {fieldError("full_name") && <span className="text-red-600 text-xs mt-1">{fieldError("full_name")}</span>}
                         </div>
 
                         {/* Telephone */}
@@ -125,8 +157,9 @@ const RegisterModal = ({ open, onClose }) => {
                                 onChange={handleChange}
                                 placeholder="e.g. +233501234567"
                                 required
-                                className="border border-gray-300 rounded-lg px-4 py-3 text-sm text-black"
+                                className={inputClass("phone_number")}
                             />
+                            {fieldError("phone_number") && <span className="text-red-600 text-xs mt-1">{fieldError("phone_number")}</span>}
                         </div>
 
                         {/* Email */}
@@ -139,8 +172,9 @@ const RegisterModal = ({ open, onClose }) => {
                                 onChange={handleChange}
                                 placeholder="e.g. johndoe@example.com"
                                 required
-                                className="border border-gray-300 rounded-lg px-4 py-3 text-sm text-black"
+                                className={inputClass("email")}
                             />
+                            {fieldError("email") && <span className="text-red-600 text-xs mt-1">{fieldError("email")}</span>}
                         </div>
 
                         {/* T-Shirt */}
@@ -151,7 +185,7 @@ const RegisterModal = ({ open, onClose }) => {
                                 value={formData.tshirt_size}
                                 onChange={handleChange}
                                 required
-                                className="border border-gray-300 bg-white rounded-lg px-4 py-3 text-sm text-black"
+                                className={`${inputClass("tshirt_size")} bg-white`}
                             >
                                 <option value="">Select size</option>
                                 <option value="S">S</option>
@@ -160,6 +194,7 @@ const RegisterModal = ({ open, onClose }) => {
                                 <option value="XL">XL</option>
                                 <option value="XXL">XXL</option>
                             </select>
+                            {fieldError("tshirt_size") && <span className="text-red-600 text-xs mt-1">{fieldError("tshirt_size")}</span>}
                         </div>
 
                         {/* Other Fields */}
@@ -179,8 +214,9 @@ const RegisterModal = ({ open, onClose }) => {
                                     placeholder={placeholder}
                                     value={formData[name] || ""}
                                     onChange={handleChange}
-                                    className="border border-gray-300 rounded-lg px-4 py-3 text-sm text-black"
+                                    className={inputClass(name)}
                                 />
+                                {fieldError(name) && <span className="text-red-600 text-xs mt-1">{fieldError(name)}</span>}
                             </div>
                         ))}
 
@@ -188,23 +224,25 @@ const RegisterModal = ({ open, onClose }) => {
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-6 py-2 border border-gray-400 rounded-lg bg-white"
+                                disabled={submitting}
+                                className="px-6 py-2 border border-gray-400 rounded-lg bg-white disabled:opacity-60"
                             >
                                 Cancel
                             </button>
 
                             <button
                                 type="submit"
-                                className="px-6 py-2 rounded-lg bg-[#0637A2] text-white"
+                                disabled={submitting}
+                                className="px-6 py-2 rounded-lg bg-[#0637A2] text-white disabled:opacity-60"
                             >
-                                Confirm
+                                {submitting ? "Submitting..." : "Confirm"}
                             </button>
                         </div>
                     </form>
                 </div>
 
                 {showSuccessModal && (
-                    <SuccessModal onDone={handleFinalSubmit} />
+                    <SuccessModal onDone={handleDone} />
                 )}
             </div>
         </div>

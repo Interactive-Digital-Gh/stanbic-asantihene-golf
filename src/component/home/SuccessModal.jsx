@@ -6,12 +6,11 @@ import icon from "../../assets/hero/doneshield.png"
 const SuccessModal = ({ onDone }) => {
     const [closing, setClosing] = useState(false);
 
-    const handleDoneClick = async () => {
+    // The registration has already been saved by the time this modal is
+    // shown; Done just plays the exit animation and closes the form.
+    const handleDoneClick = () => {
         setClosing(true);
-
-        setTimeout(async () => {
-            await onDone(); // send to API
-        }, 250);
+        setTimeout(onDone, 250);
     };
 
     return (

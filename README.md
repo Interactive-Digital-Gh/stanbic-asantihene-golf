@@ -12,6 +12,8 @@ npm ci
 npm run dev        # http://localhost:5173
 ```
 
+The registration form and leaderboard talk to the live CMS by default. To point them at a local CMS instead, set `VITE_CMS_URL` (for example `VITE_CMS_URL=http://127.0.0.1:8000 npm run dev`).
+
 Other scripts:
 
 ```bash
